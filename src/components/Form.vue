@@ -97,7 +97,7 @@
             <input class="form__input form__date" type="date" required>
           </div>
         </div>
-        <button>Отправить</button>
+        <button class="btn" type="submit">Отправить</button>
       </form>
       <h1 class="frame__req">
         *Поле обязательное для заполнения
@@ -246,6 +246,17 @@ label {
     .multiselect {
         margin-bottom: 20px;
     }
+}
+
+.btn {
+  font-size: 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin-top: 30px;
 }
 
 @media screen and (max-width: 1154px) {
