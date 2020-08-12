@@ -17,9 +17,7 @@ export default {
   },
   data() {
     return {
-      step: 1,
-      name: '',
-      age: 0
+
     }
   },
   validations: {

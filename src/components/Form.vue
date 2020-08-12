@@ -1,110 +1,174 @@
 <template>
-    <div class="container">
+  <div class="container">
     <div class="frame">
       <form action="" @submit.prevent="registerUser" novalidate>
-      <transition name="slide-fade">
-        <div v-show="step === 1" class="step">
+        <transition name="slide-fade">
+          <div v-show="step === 1" class="step">
             <h1 class="frame__title">
               Регистрация
             </h1>
             <div class="form">
               <div class="form__left">
-                <label class="form__label" for=""><span class="form__name">Фамилия</span></label>
-                <input class="form__input" type="text">
-                <label class="form__label" for=""><span class="form__name">Имя</span></label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Отчество</label>
-                <input class="form__input" type="text">
-                <label class="form__label " for=""><span class="form__name">Дата рождения</span></label>
-                <input class="form__input form__date" type="date">
-                <label class="form__label" for=""><span class="form__name">Номер телефона</span></label>
-                <input class="form__input" type="tel">
-                <label class="form__label" for="">Пол</label>
-                <select class="form__input form__select" name="" id="">
-                  <option class="form__option" value="" selected disabled></option>
-                  <option class="form__option" value="">Мужской</option>
-                  <option class="form__option" value="">Женский</option>
-                </select>
-                <label class="form__label form__checkTitle" for=""><span class="form__name">Группа клиентов</span></label>
-                <div class="multiselect">
-                  <label class="check" for="vip" >
-                    <input id="vip" class="form__input check__main" type="checkbox">
-                    <span class="check__box"></span>
-                    VIP
-                  </label>
-                  <label class="check" for="prob">
-                    <input id="prob" class="form__input check__main" type="checkbox">
-                    <span class="check__box"></span>
-                    Проблемные
-                  </label>
-                  <label class="check" for="oms">
-                    <input id="oms" class="form__input check__main" type="checkbox">
-                    <span class="check__box"></span>
-                    ОМС
-                  </label>
-                </div>
-                <label class="form__label" for="">Лечащий врач</label>
-                <select class="form__input form__select" name="" id="">
-                  <option class="form__option" value="" selected disabled></option>
-                  <option class="form__option" value="">Иванов</option>
-                  <option class="form__option" value="">Захаров</option>
-                  <option class="form__option" value="">Чернышева</option>
-                </select>
-                <label class="form__label form__checkTitle" for="">СМС оповещение</label>
-                <div class="multiselect">
-                  <label class="check" for="sms">
-                    <input id="sms" class="form__input check__main" type="checkbox">
-                    <span class="check__box"></span>
-                    Не отправлять СМС
-                  </label>
+
+                <div class="form__group">
+                  <label class="form__label" for="surname"><span class="form__name">Фамилия</span></label>
+                  <input class="form__input" type="text" id="surname" v-model="formReg.surname">
                 </div>
 
-              </div>
+                <div class="form__group">
+                  <label class="form__label" for="name"><span class="form__name">Имя</span></label>
+                  <input class="form__input" type="text" id="name" v-model="formReg.name">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="father">Отчество</label>
+                  <input class="form__input" type="text" id="father">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label " for="birth"><span class="form__name">Дата рождения</span></label>
+                  <input class="form__input form__date" type="date" id="birth" v-model="formReg.birth">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="tel"><span class="form__name">Номер телефона</span></label>
+                  <input class="form__input" type="tel" id="tel" v-model="formReg.tel">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="sex">Пол</label>
+                  <select class="form__input form__select" name="" id="sex">
+                    <option class="form__option" value="" selected disabled></option>
+                    <option class="form__option" value="">Мужской</option>
+                    <option class="form__option" value="">Женский</option>
+                  </select>
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label form__checkTitle" for=""><span class="form__name">Группа клиентов</span></label>
+                  <div class="multiselect">
+                    <label class="check" for="vip" >
+                      <input id="vip" class="form__input check__main" type="checkbox">
+                      <span class="check__box"></span>
+                      VIP
+                    </label>
+                    <label class="check" for="prob">
+                      <input id="prob" class="form__input check__main" type="checkbox">
+                      <span class="check__box"></span>
+                      Проблемные
+                    </label>
+                    <label class="check" for="oms">
+                      <input id="oms" class="form__input check__main" type="checkbox">
+                      <span class="check__box"></span>
+                      ОМС
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="doctor">Лечащий врач</label>
+                  <select class="form__input form__select" name="doctor" id="">
+                    <option class="form__option" value="" selected disabled></option>
+                    <option class="form__option" value="">Иванов</option>
+                    <option class="form__option" value="">Захаров</option>
+                    <option class="form__option" value="">Чернышева</option>
+                  </select>
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label form__checkTitle" for="">СМС оповещение</label>
+                  <div class="multiselect">
+                    <label class="check" for="sms">
+                      <input id="sms" class="form__input check__main" type="checkbox">
+                      <span class="check__box"></span>
+                      Не отправлять СМС
+                    </label>
+                  </div>
+                </div>
+
+              </div> <!-- FORM__LEFT -->
               <div class="form__right">
-                <label class="form__label" for="">Индекс</label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Страна</label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Область</label>
-                <input class="form__input" type="text">
-                <label class="form__label" for=""><span class="form__name">Город</span></label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Улица</label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Дом</label>
-                <input class="form__input" type="text">
-              </div>
-            </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="index">Индекс</label>
+                  <input class="form__input" type="text" id="index">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="country">Страна</label>
+                  <input class="form__input" type="text" id="country">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="region">Область</label>
+                  <input class="form__input" type="text" id="region">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="city"><span class="form__name">Город</span></label>
+                  <input class="form__input" type="text" id="city">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="street">Улица</label>
+                  <input class="form__input" type="text" id="street">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="home">Дом</label>
+                  <input class="form__input" type="text" id="home">
+                </div>
+
+              </div> <!-- FORM__RIGHT -->
+            </div> <!-- FORM DIV -->
             <button @click="nextStep" class="btn" type="button">Далее</button>
             <h1 class="frame__req">
             *Поле обязательное для заполнения
             </h1>
           </div> <!-- STEP -->
         </transition>
+
         <transition name="slide-fade">
           <div v-show="step === 2" class="step">
             <h1 class="frame__title">
               Паспорт
             </h1>
+
             <div class="form">
               <div class="form__left">
-                <label class="form__label" for=""><span class="form__name">Тип документа</span></label>
-                <select class="form__input form__select" name="" id="">
-                  <option class="form__option" value="" selected disabled></option>
-                  <option class="form__option" value="">Паспорт</option>
-                  <option class="form__option" value="">Свидетельство о рождении</option>
-                  <option class="form__option" value="">Вод. удостоверение</option>
-                </select>
-                <label class="form__label" for="">Серия</label>
-                <input class="form__input" type="text">
-                <label class="form__label" for="">Номер</label>
-                <input class="form__input" type="text">
-              </div>
+
+                <div class="form__group">
+                  <label class="form__label" for=""><span class="form__name">Тип документа</span></label>
+                  <select class="form__input form__select" name="" id="">
+                    <option class="form__option" value="" selected disabled></option>
+                    <option class="form__option" value="">Паспорт</option>
+                    <option class="form__option" value="">Свидетельство о рождении</option>
+                    <option class="form__option" value="">Вод. удостоверение</option>
+                  </select>
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="series">Серия</label>
+                  <input class="form__input" type="text" id="series">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label" for="number">Номер</label>
+                  <input class="form__input" type="text" id="number">
+                </div>
+              </div> <!-- FORM__LEFT -->
+
               <div class="form__right">
-                <label class="form__label" for="">Кем выдан</label>
-                <input class="form__input" type="text">
-                <label class="form__label " for=""><span class="form__name">Дата выдачи</span></label>
-                <input class="form__input form__date" type="date">
+
+                <div class="form__group">
+                  <label class="form__label" for="given">Кем выдан</label>
+                  <input class="form__input" type="text" id="given">
+                </div>
+
+                <div class="form__group">
+                  <label class="form__label " for=""><span class="form__name">Дата выдачи</span></label>
+                  <input class="form__input form__date" type="date">
+                </div>
               </div>
             </div>
             <button @click="backStep" class="btn" type="button">Назад</button>
@@ -115,9 +179,8 @@
           </div> <!-- STEP -->
         </transition>
       </form>
-    </div>
-    
-  </div>
+    </div> <!-- FRAME -->
+  </div> <!-- CONTAINER -->
 </template>
 
 <script>
@@ -126,8 +189,14 @@ export default {
     return {
       step: 1,
       formReg: {
+        surname: '',
         name: '',
-
+        birth: '',
+        tel: '',
+        group: '',
+        city: '',
+        doc: '',
+        given: ''
       }
     }
   },
@@ -139,7 +208,8 @@ export default {
       this.step --
     },
     registerUser() {
-      console.log('Пользователь зарегистрирован')
+      console.log('Пользователь зарегистрирован');
+      console.log(this.formReg.surname)
     }
   }
 }
