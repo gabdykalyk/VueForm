@@ -48,9 +48,12 @@
                   <input class="form__input" type="tel" id="tel" 
                   @blur="$v.formReg.tel.$touch()"
                   v-model="formReg.tel">
-
+                    {{ formReg.tel[0] }}
                   <div class="error" v-if="!$v.formReg.tel.required">Поле обязательно для заполнения</div>
                   <div class="error" v-if="!$v.formReg.tel.numeric">Неверный формат номера телефона</div>
+                  <div class="error" v-if="!$v.formReg.tel.minLength">Неверный формат номера телефона</div>
+                  <div class="error" v-if="!$v.formReg.tel.maxLength">Неверный формат номера телефона</div>
+                  <div class="error error-tel" v-if="!(formReg.tel[0] === '7')">Номер должен начинаться с 7</div>
                 </div>
 
                 <div class="form__group">
@@ -229,7 +232,7 @@
 
 
 <script>
-import { required, helpers, numeric } from 'vuelidate/lib/validators'
+import { required, helpers, numeric, minLength, maxLength } from 'vuelidate/lib/validators'
 const alpha = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
 
 export default {
@@ -294,7 +297,9 @@ export default {
         },
         tel: {
           required,
-          numeric
+          numeric,
+          minLength: minLength(11),
+          maxLength: maxLength(11)
         },
         city: {
           required,
@@ -520,6 +525,10 @@ label {
   font-size: 13px;
   font-weight: 700;
   position: absolute;
+
+  &-tel {
+    top: 117%;
+  }
 }
 
 .container .frame .form__input {
