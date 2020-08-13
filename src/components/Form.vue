@@ -10,14 +10,23 @@
             <div class="form">
               <div class="form__left">
 
-                <div class="form__group">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.surname.$error }">
                   <label class="form__label" for="surname"><span class="form__name">Фамилия</span></label>
-                  <input class="form__input" type="text" id="surname" v-model="formReg.surname">
+                  <input class="form__input" type="text" id="surname" 
+                  @blur="$v.formReg.surname.$touch()"
+                  v-model="formReg.surname">
+                  
+                  <div class="error" v-if="!$v.formReg.surname.required">Поле обязательно для заполнения</div>
+                  <div class="error" v-if="!$v.formReg.surname.alpha">Фамилия не может содержать цифры или символы</div>
                 </div>
 
-                <div class="form__group">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.name.$error }">
                   <label class="form__label" for="name"><span class="form__name">Имя</span></label>
-                  <input class="form__input" type="text" id="name" v-model="formReg.name">
+                  <input class="form__input" type="text" id="name"
+                  @blur="$v.formReg.name.$touch()"
+                  v-model="formReg.name">
+                  <div class="error" v-if="!$v.formReg.name.required">Поле обязательно для заполнения</div>
+                  <div class="error" v-if="!$v.formReg.name.alpha">Имя не может содержать цифры или символы</div>
                 </div>
 
                 <div class="form__group">
@@ -25,22 +34,31 @@
                   <input class="form__input" type="text" id="father">
                 </div>
 
-                <div class="form__group">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.birth.$error }">
                   <label class="form__label " for="birth"><span class="form__name">Дата рождения</span></label>
-                  <input class="form__input form__date" type="date" id="birth" v-model="formReg.birth">
+                  <input class="form__input form__date" type="date" id="birth" 
+                  @blur="$v.formReg.birth.$touch()"
+                  v-model="formReg.birth">
+
+                  <div class="error" v-if="!$v.formReg.birth.required">Поле обязательно для заполнения</div>
                 </div>
 
-                <div class="form__group">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.tel.$error }">
                   <label class="form__label" for="tel"><span class="form__name">Номер телефона</span></label>
-                  <input class="form__input" type="tel" id="tel" v-model="formReg.tel">
+                  <input class="form__input" type="tel" id="tel" 
+                  @blur="$v.formReg.tel.$touch()"
+                  v-model="formReg.tel">
+
+                  <div class="error" v-if="!$v.formReg.tel.required">Поле обязательно для заполнения</div>
+                  <div class="error" v-if="!$v.formReg.tel.numeric">Неверный формат номера телефона</div>
                 </div>
 
                 <div class="form__group">
                   <label class="form__label" for="sex">Пол</label>
                   <select class="form__input form__select" name="" id="sex">
-                    <option class="form__option" value="" selected disabled></option>
-                    <option class="form__option" value="">Мужской</option>
-                    <option class="form__option" value="">Женский</option>
+                    <option class="form__option" disabled></option>
+                    <option class="form__option">Мужской</option>
+                    <option class="form__option">Женский</option>
                   </select>
                 </div>
 
@@ -48,20 +66,21 @@
                   <label class="form__label form__checkTitle" for=""><span class="form__name">Группа клиентов</span></label>
                   <div class="multiselect">
                     <label class="check" for="vip" >
-                      <input id="vip" class="form__input check__main" type="checkbox">
+                      <input id="vip" class="form__input check__main" value="vip" type="checkbox" v-model="checkedNames">
                       <span class="check__box"></span>
                       VIP
                     </label>
                     <label class="check" for="prob">
-                      <input id="prob" class="form__input check__main" type="checkbox">
+                      <input id="prob" class="form__input check__main" value="prob" type="checkbox" v-model="checkedNames">
                       <span class="check__box"></span>
                       Проблемные
                     </label>
                     <label class="check" for="oms">
-                      <input id="oms" class="form__input check__main" type="checkbox">
+                      <input id="oms" class="form__input check__main" value="oms" type="checkbox" v-model="checkedNames">
                       <span class="check__box"></span>
                       ОМС
                     </label>
+                    <div class="error" v-if="(!checkedNames[0])">Поле обязательно для заполнения</div>
                   </div>
                 </div>
 
@@ -104,9 +123,14 @@
                   <input class="form__input" type="text" id="region">
                 </div>
 
-                <div class="form__group">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.city.$error }">
                   <label class="form__label" for="city"><span class="form__name">Город</span></label>
-                  <input class="form__input" type="text" id="city">
+                  <input class="form__input" type="text" id="city"
+                  @blur="$v.formReg.city.$touch()"
+                  v-model="formReg.city">
+
+                  <div class="error" v-if="!$v.formReg.city.required">Поле обязательно для заполнения</div>
+                  <div class="error" v-if="!$v.formReg.city.alpha">Название города не может содержать цифры или символы</div>
                 </div>
 
                 <div class="form__group">
@@ -121,7 +145,7 @@
 
               </div> <!-- FORM__RIGHT -->
             </div> <!-- FORM DIV -->
-            <button @click="nextStep" class="btn" type="button">Далее</button>
+            <button @click="nextStep" :disabled="disabledBtn" class="btn" type="button">Далее</button>
             <h1 class="frame__req">
             *Поле обязательное для заполнения
             </h1>
@@ -139,12 +163,14 @@
 
                 <div class="form__group">
                   <label class="form__label" for=""><span class="form__name">Тип документа</span></label>
-                  <select class="form__input form__select" name="" id="">
-                    <option class="form__option" value="" selected disabled></option>
-                    <option class="form__option" value="">Паспорт</option>
-                    <option class="form__option" value="">Свидетельство о рождении</option>
-                    <option class="form__option" value="">Вод. удостоверение</option>
+                  <select class="form__input form__select" name="" id="" v-model="selected">
+                    <option class="form__option" selected disabled></option>
+                    <option class="form__option" value="passport">Паспорт</option>
+                    <option class="form__option" value="birth">Свидетельство о рождении</option>
+                    <option class="form__option" value="drive">Вод. удостоверение</option>
                   </select>
+
+                  <div class="error" v-if="!selected">Поле обязательно для заполнения</div>
                 </div>
 
                 <div class="form__group">
@@ -165,14 +191,19 @@
                   <input class="form__input" type="text" id="given">
                 </div>
 
-                <div class="form__group">
-                  <label class="form__label " for=""><span class="form__name">Дата выдачи</span></label>
-                  <input class="form__input form__date" type="date">
+                <div class="form__group" :class="{ 'form-group--error': $v.formReg.givenDate.$error }">
+                  <label class="form__label " for="givenDate"><span class="form__name">Дата выдачи</span></label>
+                  <input class="form__input form__date" type="date" id="givenDate"
+                  @blur="$v.formReg.givenDate.$touch()"
+                  v-model="formReg.givenDate">
+
+                  <div class="error" v-if="!$v.formReg.givenDate.required">Поле обязательно для заполнения</div>
                 </div>
+
               </div>
             </div>
             <button @click="backStep" class="btn" type="button">Назад</button>
-            <button class="btn" type="submit">Отправить</button>
+            <button class="btn" type="submit" :disabled="disabledSend">Отправить</button>
             <h1 class="frame__req">
             *Поле обязательное для заполнения
             </h1>
@@ -180,24 +211,57 @@
         </transition>
       </form>
     </div> <!-- FRAME -->
+
+    <transition name="slide-fade">
+    <div class="registered" v-if="registered">
+      <div class="registered__box">
+        <h1 class="registered__text">
+          Поздравляем! <br>
+          Вы успешно зарегистрированы!
+        </h1>
+        <div class="close" @click="close">X</div>
+      </div>
+    </div>
+    </transition>
   </div> <!-- CONTAINER -->
 </template>
 
+
+
 <script>
+import { required, helpers, numeric } from 'vuelidate/lib/validators'
+const alpha = helpers.regex('alpha', /^[a-zA-Zа-яёА-ЯЁ]*$/)
+
 export default {
   data() {
     return {
+      checkedNames: [],
+      selected: '',
+      registered: false,
       step: 1,
       formReg: {
         surname: '',
         name: '',
         birth: '',
         tel: '',
-        group: '',
         city: '',
-        doc: '',
-        given: ''
+        givenDate: '',
+        selected: ''
       }
+    }
+  },
+  computed: {
+    disabledBtn() {
+      return this.$v.formReg.surname.$invalid ||
+             this.$v.formReg.name.$invalid ||
+             this.$v.formReg.tel.$invalid ||
+             this.$v.formReg.city.$invalid ||
+             this.$v.formReg.birth.$invalid ||
+             !this.checkedNames[0]
+    },
+    disabledSend() {
+      return this.$v.formReg.givenDate.$invalid ||
+             !this.selected
     }
   },
   methods: {
@@ -209,9 +273,41 @@ export default {
     },
     registerUser() {
       console.log('Пользователь зарегистрирован');
-      console.log(this.formReg.surname)
+      this.registered = true;
+    },
+    close() {
+      this.registered = false;
     }
-  }
+  },
+  validations: {
+    formReg: {
+        surname: {
+          required,
+          alpha
+        },
+        name: {
+          required,
+          alpha
+        },
+        birth: {
+          required
+        },
+        tel: {
+          required,
+          numeric
+        },
+        city: {
+          required,
+          alpha
+        },
+        givenDate: {
+          required
+        },
+        selected: {
+
+        }
+      }
+  },
 }
 </script>
 
@@ -369,13 +465,107 @@ label {
   cursor: pointer;
 
   &:hover {
-    background-color: hsl(211, 100%, 65%); ;
+    background-color: hsl(211, 100%, 65%);
+  }
+
+  &:disabled {
+    background-color: hsl(211, 100%, 75%);
+    cursor:default
+  }
+}
+
+@keyframes shakeError {
+  0% {
+      transform: translateX(0);
+  }
+
+  15% {
+      transform: translateX(0.375rem);
+  }
+  30% {
+      transform: translateX(-0.375rem);
+  }
+  45% {
+      transform: translateX(0.375rem);
+  }
+  60% {
+      transform: translateX(-0.375rem);
+  }
+  75% {
+      transform: translateX(0.375rem);
+  }
+  90% {
+      transform: translateX(-0.375rem);
+  }
+  100% {
+      transform: translateX(0);
+  }
+}
+
+.form-group--error {
+  animation-name: shakeError;
+  animation-fill-mode: forwards;
+  animation-duration: .6s;
+  animation-timing-function: ease-in-out;
+  color: #d33a1f
+}
+
+.form__group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.error {
+  color: #d33a1f;
+  font-size: 13px;
+  font-weight: 700;
+  position: absolute;
+}
+
+.container .frame .form__input {
+  border: 2px solid rgba(40, 6, 96, 0)
+}
+
+.frame .form-group--error .form__input{
+  border: 2px solid #d33a1f;
+}
+
+.registered {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__box {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 100px;
+    position: relative;
+    max-width: 80%;
+
+    .close {
+      position: absolute;
+      right: 5%;
+      top: 10%;
+      font-weight: 700;
+      cursor: pointer;
+    }
   }
 }
 
 @media screen and (max-width: 1154px) {
     .container {
         max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 975px) {
+    .registered__box {
+        padding: 50px;
     }
 }
 
@@ -395,6 +585,22 @@ label {
     .container .frame {
       padding: 20px 0;
       text-align: center;
+    }
+
+    .error {
+      left: 11%;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .registered .registered__box .registered__text{
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 528px) {
+    .registered__box{
+        padding: 30px;
     }
 }
 
