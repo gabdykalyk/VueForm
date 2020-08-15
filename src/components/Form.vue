@@ -48,7 +48,6 @@
                   <input class="form__input" type="tel" id="tel" 
                   @blur="$v.formReg.tel.$touch()"
                   v-model="formReg.tel">
-                    {{ formReg.tel[0] }}
                   <div class="error" v-if="!$v.formReg.tel.required">Поле обязательно для заполнения</div>
                   <div class="error" v-if="!$v.formReg.tel.numeric">Неверный формат номера телефона</div>
                   <div class="error" v-if="!$v.formReg.tel.minLength">Неверный формат номера телефона</div>
